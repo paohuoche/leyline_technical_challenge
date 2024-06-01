@@ -1,0 +1,164 @@
+openapi: 3.0.0
+info:
+  title: Multiple Endpoints API
+  description: API for submitting amounts and responses, and retrieving responses and amounts
+  version: 1.0.0
+paths:
+  /submitAmount:
+    post:
+      summary: Submit amount
+      description: Endpoint to submit an amount
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  example: 100.50
+      responses:
+        "200":
+          description: Successful submission
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Amount submitted successfully."
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "Invalid input data."
+  /submitResponse:
+    post:
+      summary: Submit response
+      description: Endpoint to submit a response
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                response:
+                  type: string
+                  enum: [Objected, Agreed]
+                  example: "Agreed"
+      responses:
+        "200":
+          description: Successful submission
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Response submitted successfully."
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "Invalid input data."
+  /getResponse:
+    get:
+      summary: Get response
+      description: Endpoint to get the response
+      responses:
+        "200":
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
+                    enum: [Objected, Agreed]
+                    example: "Agreed"
+        "404":
+          description: Response not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "Response not found."
+  /getAmount:
+    get:
+      summary: Get amount
+      description: Endpoint to get the amount
+      responses:
+        "200":
+          description: Successful retrieval
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                    example: 100.50
+        "404":
+          description: Amount not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error:
+                    type: string
+                    example: "Amount not found."
+servers:
+  - url: https://api.example.com
+    description: Production server
+  - url: https://staging.api.example.com
+    description: Staging server
+components:
+  schemas:
+    Amount:
+      type: object
+      properties:
+        amount:
+          type: number
+    Response:
+      type: object
+      properties:
+        response:
+          type: string
+          enum: [Objected, Agreed]
