@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Toaster } from "@/components/ui/toaster"
+import { toast } from "@/components/ui/use-toast"
 import { operations, paths } from "@/types/api.types"
 import { useQuery, useMutation } from "@tanstack/react-query"
 import path from "path"
@@ -16,7 +17,7 @@ function Requester() {
         (res) =>
           res.json() as paths["/getAmount"]["get"]["responses"]["200"]["content"]["application/json"]
       ),
-    refetchInterval: 1,
+    // refetchInterval: 1,
     // retry: true
   })
 
@@ -24,11 +25,11 @@ function Requester() {
   // If party B has reponsed and party A does not resubmit new amount, this api should be return error: "Response already submitted."
   const { mutateAsync } = useMutation({
     mutationFn: (
-      requestBody: paths["/submitResponse"]["post"]["requestBody"]["content"]["application/json"]["response"]
+      requestBody: paths["/submitResponse"]["post"]["requestBody"]["content"]["application/json"]
     ) =>
       fetch("http://127.0.0.1:4010/submitResponse", {
         method: "POST",
-        body: requestBody,
+        body: JSON.stringify(requestBody),
         headers: {
           "Content-Type": "application/json",
         },
@@ -38,14 +39,34 @@ function Requester() {
   // onDispute
   const onDispute = async () => {
     try {
-      await mutateAsync("Objected")
+      await mutateAsync({
+        response: "Objected",
+      })
+      toast({
+        title: "Success",
+        description: (
+          <div>
+            <div>Response Objected successfully.</div>
+          </div>
+        ),
+      })
     } catch (error) {}
   }
 
   // onAgree
   const onAgree = async () => {
     try {
-      await mutateAsync("Agreed")
+      await mutateAsync({
+        response: "Agreed",
+      })
+      toast({
+        title: "Success",
+        description: (
+          <div>
+            <div>Response Agreed successfully.</div>
+          </div>
+        ),
+      })
     } catch (error) {}
   }
 
