@@ -4,8 +4,11 @@ import { Toaster } from "@/components/ui/toaster"
 import { toast } from "@/components/ui/use-toast"
 import { paths } from "@/types/api.types"
 import { useMutation, useQuery } from "@tanstack/react-query"
+import { useRouter } from "next/router"
 
 function PartyB() {
+  const router = useRouter()
+
   // fetch the amount from the Party A
   // this api should be implement for long polling.
   // amount can be undefined, that means the party A has not submitted the amount yet.
@@ -67,6 +70,7 @@ function PartyB() {
           </div>
         ),
       })
+      router.push("/settled")
     } catch (error) {}
   }
 
