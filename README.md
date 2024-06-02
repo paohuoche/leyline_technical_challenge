@@ -26,7 +26,9 @@ mockServer and types of api were all depends on it.
 ## Party A
 Using long polling to listen if there is new response from Party B
 
-If yes, there will a toast to be popped up, with a button to refresh the status.
+If yes, there will a toast to be popped up, with a button to refresh the status. 
+
+Submit button will be disabled when new response coming, but I comment this feature, otherwise it will not be available because the api is mocked.
 
 ## Party B
 Also using long polling to listen the new proposed amount.
@@ -34,4 +36,6 @@ Also using long polling to listen the new proposed amount.
 After submiting the response to Party A, the api for submit should be returning a error that notified you have submited and without new amount updated.
 
 
+## At last
+Due to the mock api can not stimulate real-world scenarios, the pages do not function logically.
 
