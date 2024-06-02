@@ -100,8 +100,9 @@ paths:
                 type: object
                 properties:
                   response:
+                    required: true
                     type: string
-                    enum: [Objected, Agreed]
+                    enum: [Objected, Agreed, NotAnswered]
                     example: "Agreed"
         "404":
           description: Response not found
@@ -144,6 +145,15 @@ paths:
                   error:
                     type: string
                     example: "Amount not found."
+  /getNewResponse:
+    get:
+      summary: Get new response
+      description: Endpoint to get a new response without any response body
+      responses:
+        "200":
+          description: Successful retrieval
+        "404":
+          description: New response not found
 servers:
   - url: https://api.example.com
     description: Production server
@@ -161,4 +171,4 @@ components:
       properties:
         response:
           type: string
-          enum: [Objected, Agreed]
+          enum: [Objected, Agreed, NotAnswered]

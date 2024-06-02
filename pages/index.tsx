@@ -7,10 +7,10 @@ export default function Home() {
       <div className="">
         <div className="font-bold text-center mb-4">To Be</div>
         <div className="space-x-2">
-          <Link href="/requester">
+          <Link href="/a">
             <Button variant={"secondary"}>Party A</Button>
           </Link>
-          <Link href="recevier">
+          <Link href="b">
             <Button>Party B</Button>
           </Link>
         </div>

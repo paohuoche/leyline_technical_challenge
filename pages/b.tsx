@@ -1,14 +1,13 @@
+import Back from "@/components/Back"
 import { Button } from "@/components/ui/button"
 import { Toaster } from "@/components/ui/toaster"
 import { toast } from "@/components/ui/use-toast"
-import { operations, paths } from "@/types/api.types"
-import { useQuery, useMutation } from "@tanstack/react-query"
-import path from "path"
+import { paths } from "@/types/api.types"
+import { useMutation, useQuery } from "@tanstack/react-query"
 
-function Requester() {
+function PartyB() {
   // fetch the amount from the Party A
   // this api should be implement for long polling.
-  // set refetchInterval to 1 milliseconds, so it will fetch again after success.
   // amount can be undefined, that means the party A has not submitted the amount yet.
   const { data } = useQuery({
     queryKey: ["proposal_account"],
@@ -17,8 +16,9 @@ function Requester() {
         (res) =>
           res.json() as paths["/getAmount"]["get"]["responses"]["200"]["content"]["application/json"]
       ),
-    // refetchInterval: 1,
-    // retry: true
+    // refetchInterval: 1,  // set refetchInterval to 1 milliseconds, so it will fetch again after success.
+    retry: true, // fetch again if failed.
+    refetchIntervalInBackground: true,
   })
 
   // /submitResponse mutation
@@ -72,6 +72,10 @@ function Requester() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50">
+      <div className="absolute top-6 left-6">
+        <Back />
+      </div>
+
       <div className="bg-white p-6 w-[360px] rounded-lg">
         <div className="flex justify-between items-center mb-4">
           <span className="font-bold">Proposal amount: </span>
@@ -92,4 +96,4 @@ function Requester() {
   )
 }
 
-export default Requester
+export default PartyB

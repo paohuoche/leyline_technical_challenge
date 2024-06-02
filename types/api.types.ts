@@ -103,7 +103,7 @@ export interface paths {
                * @example Agreed
                * @enum {string}
                */
-              response?: "Objected" | "Agreed";
+              response?: "Objected" | "Agreed" | "NotAnswered";
             };
           };
         };
@@ -151,6 +151,24 @@ export interface paths {
       };
     };
   };
+  "/getNewResponse": {
+    /**
+     * Get new response
+     * @description Endpoint to get a new response without any response body
+     */
+    get: {
+      responses: {
+        /** @description Successful retrieval */
+        200: {
+          content: never;
+        };
+        /** @description New response not found */
+        404: {
+          content: never;
+        };
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
@@ -162,7 +180,7 @@ export interface components {
     };
     Response: {
       /** @enum {string} */
-      response?: "Objected" | "Agreed";
+      response?: "Objected" | "Agreed" | "NotAnswered";
     };
   };
   responses: never;
